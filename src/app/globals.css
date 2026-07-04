@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Brand palette — pulled from logo motif */
+  --color-maroon:      #9B2335;
+  --color-maroon-dark: #7A1A28;
+  --color-navy:        #1B3A6B;
+  --color-navy-dark:   #0F2348;
+  --color-navy-light:  #2A5298;
+  --color-forest:      #2D6A2D;
+  --color-forest-dark: #1E4D1E;
+  --color-forest-light:#3D8C3D;
+  --color-orange:      #CC5500;
+  --color-orange-light:#E06E20;
+  --color-plum:        #6B3A5D;
+  --color-plum-light:  #8B5280;
+  --color-cream:       #FAF7F2;
+  --color-cream-dark:  #EFE8DC;
+  --color-warm-gray:   #5A5654;
+
+  /* Typography via next/font variables */
+  --font-sans:  var(--font-body);
+  --font-serif: var(--font-heading);
+}
+
+:root {
+  --background: #FAF7F2;
+  --foreground: #1a1a2e;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), 'Helvetica Neue', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), Georgia, serif;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection colors */
+::selection {
+  background-color: #9B2335;
+  color: #FAF7F2;
+}
