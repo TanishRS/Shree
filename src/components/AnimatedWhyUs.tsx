@@ -5,8 +5,8 @@ import { motion, useReducedMotion } from "framer-motion";
 const WHY_US = [
   {
     accent: "#9B2335",
-    title: "Grades 8–10 Focus",
-    body: "Specialist coaching at the exact stage where strong foundations matter most — before board years and competitive exams.",
+    title: "Grades 8–12 Coverage",
+    body: "From foundational middle-school years through SSC/HSC and CBSE board exams — one institute for the full secondary journey.",
   },
   {
     accent: "#1B3A6B",

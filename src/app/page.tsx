@@ -10,7 +10,7 @@ const STATS = [
   { value: "4.9★", label: "Google Rating",    dot: "#9B2335" },
   { value: "44",   label: "Student Reviews",  dot: "#6B3A5D" },  // was text-navy = invisible; fixed
   { value: "2",    label: "Boards Covered",   dot: "#2D6A2D" },
-  { value: "3",    label: "Grades (8–10)",    dot: "#CC5500" },
+  { value: "5",    label: "Grades (8–12)",    dot: "#CC5500" },
 ];
 
 export default function HomePage() {
@@ -91,7 +91,7 @@ export default function HomePage() {
                 A tuition home that feels like family.
               </h2>
               <p className="text-warm-gray leading-relaxed mb-4" style={{ fontFamily: "var(--font-body, sans-serif)" }}>
-                Shree Excellence Tutorials has been a trusted part of Panvel&apos;s educational landscape since 2017. We focus exclusively on Grades 8, 9, and 10 — the years that shape the academic habits students carry for life.
+                Shree Excellence Tutorials has been a trusted part of Panvel&apos;s educational landscape since 2017. We coach Grades 8 through 12 — from the foundational middle years right through to board exams.
               </p>
               <p className="text-warm-gray leading-relaxed mb-8" style={{ fontFamily: "var(--font-body, sans-serif)" }}>
                 Our approach is straightforward: small groups, clear explanations, and enough personal attention so no student slips behind unnoticed.

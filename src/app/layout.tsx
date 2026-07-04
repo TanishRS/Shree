@@ -22,13 +22,13 @@ const sourceSans = Source_Sans_3({
 export const metadata: Metadata = {
   title: "Shree Excellence Tutorials | Pride in Excellence",
   description:
-    "State Board and CBSE coaching for Grades 8–10 in Panvel, Maharashtra. Rated 4.9★ on Google with 44 reviews. Call +91 99673 65793.",
+    "State Board and CBSE coaching for Grades 8–12 in Panvel, Maharashtra. Rated 4.9★ on Google with 44 reviews. Call +91 99673 65793.",
   keywords: [
     "tuition Panvel",
     "coaching classes Panvel",
     "CBSE tuition Khanda Colony",
     "State Board coaching Panvel",
-    "Grade 8 9 10 tuition",
+    "Grade 8 9 10 11 12 tuition",
     "Shree Excellence Tutorials",
   ],
 };

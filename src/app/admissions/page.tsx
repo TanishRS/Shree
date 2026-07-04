@@ -4,26 +4,28 @@ import { StepBlocksDivider, StepBlocksAccent } from "@/components/StepBlocksSVG"
 export const metadata: Metadata = {
   title: "Admissions | Shree Excellence Tutorials",
   description:
-    "Enrol in Shree Excellence Tutorials, Panvel. State Board and CBSE coaching for Grades 8, 9 and 10. Contact us on WhatsApp or call +91 99673 65793.",
+    "Enrol in Shree Excellence Tutorials, Panvel. State Board and CBSE coaching for Grades 8–12. Contact us on WhatsApp or call +91 99673 65793.",
 };
 
 const BOARDS = [
   {
     color: "#9B2335",
     board: "Maharashtra State Board",
-    desc: "Full syllabus coverage for SSC (Grades 8–10). Aligned with the Divisional Board timetable and paper pattern.",
+    desc: "Full syllabus coverage for SSC (Grades 8–10) and HSC (Grades 11–12). Aligned with the Divisional Board timetable and paper pattern.",
   },
   {
     color: "#1B3A6B",
     board: "CBSE",
-    desc: "Class 8–10 coaching following the NCERT curriculum. Regular practice with CBSE-style assessment formats.",
+    desc: "Class 8–12 coaching following the NCERT curriculum. Regular practice with CBSE-style assessment formats across all secondary grades.",
   },
 ];
 
 const GRADES = [
-  { grade: "Grade 8", color: "#9B2335", note: "Foundation year — building strong subject basics" },
-  { grade: "Grade 9", color: "#1B3A6B", note: "Pre-board preparation begins here" },
-  { grade: "Grade 10", color: "#2D6A2D", note: "Board examination focus and intensive revision" },
+  { grade: "Grade 8",  color: "#9B2335", note: "Foundation year — building strong subject basics" },
+  { grade: "Grade 9",  color: "#1B3A6B", note: "Concepts deepen; pre-board habits established" },
+  { grade: "Grade 10", color: "#2D6A2D", note: "SSC / CBSE board year — focused exam preparation" },
+  { grade: "Grade 11", color: "#CC5500", note: "Stream specialisation — Science, Commerce, or Arts" },
+  { grade: "Grade 12", color: "#6B3A5D", note: "HSC / CBSE board year — intensive revision and mock tests" },
 ];
 
 const STEPS = [
@@ -106,7 +108,7 @@ export default function AdmissionsPage() {
             </h2>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-3 lg:grid-cols-5 gap-6">
             {GRADES.map(({ grade, color, note }) => (
               <div
                 key={grade}

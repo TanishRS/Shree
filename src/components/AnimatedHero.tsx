@@ -97,7 +97,7 @@ export default function AnimatedHero() {
               style={{ fontFamily: "var(--font-body, sans-serif)" }}
               {...fade(0.4, 14)}
             >
-              State Board &amp; CBSE coaching for Grades 8–10 in Khanda Colony, Panvel.
+              State Board &amp; CBSE coaching for Grades 8–12 in Khanda Colony, Panvel.
               Trusted by families across the community since 2017.
             </motion.p>
 
@@ -111,7 +111,7 @@ export default function AnimatedHero() {
               {[
                 <><span className="text-yellow-500">★</span> 4.9 · 44 Reviews</>,
                 "State Board & CBSE",
-                "Grades 8–10",
+                "Grades 8–12",
               ].map((label, i) => (
                 <span
                   key={i}

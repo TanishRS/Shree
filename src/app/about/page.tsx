@@ -5,14 +5,14 @@ import { StepBlocksDivider, StepBlocksAccent } from "@/components/StepBlocksSVG"
 export const metadata: Metadata = {
   title: "About Us | Shree Excellence Tutorials",
   description:
-    "Learn about Shree Excellence Tutorials — dedicated coaching for Grades 8–10 in Panvel, Maharashtra since 2017.",
+    "Learn about Shree Excellence Tutorials — dedicated coaching for Grades 8–12 in Panvel, Maharashtra since 2017.",
 };
 
 const DIFFERENTIATORS = [
   {
     color: "#9B2335",
     heading: "Grade-specific focus",
-    body: "We teach only Grades 8, 9, and 10. That specialisation means every lesson, every example, and every past-paper drill is aimed at exactly what your child needs right now — not a diluted mix for every year group.",
+    body: "We teach Grades 8 through 12 — covering both the foundational years and the high-stakes board years. Every lesson is aimed at exactly what each grade needs, not a diluted mix.",
   },
   {
     color: "#1B3A6B",
@@ -92,7 +92,7 @@ export default function AboutPage() {
                 style={{ fontFamily: "var(--font-body, sans-serif)" }}
               >
                 <p>
-                  Shree Excellence Tutorials was founded with one intention: to give students in Panvel access to structured, attentive academic coaching at the grades where it matters most — 8, 9, and 10.
+                  Shree Excellence Tutorials was founded with one intention: to give students in Panvel access to structured, attentive academic coaching across the full secondary school journey — Grades 8 through 12.
                 </p>
                 <p>
                   Since 2017, we have been part of the Khanda Colony neighbourhood, and over the years the institute has built a reputation that is carried by our students and their families, not by advertising. Our 4.9-star rating on Google — drawn from 44 organic reviews — reflects that.

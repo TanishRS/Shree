@@ -24,7 +24,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-white/70 text-sm leading-relaxed" style={{ fontFamily: "var(--font-body, sans-serif)" }}>
-              Pride in Excellence. Dedicated coaching for Grades 8–10 (State Board &amp; CBSE) in the heart of Panvel since 2017.
+              Pride in Excellence. Dedicated coaching for Grades 8–12 (State Board &amp; CBSE) in the heart of Panvel since 2017.
             </p>
             <div className="mt-4 flex items-center gap-1.5">
               <span className="text-yellow-400 text-sm">★★★★★</span>
