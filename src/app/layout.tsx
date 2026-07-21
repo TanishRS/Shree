@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
-import { Roboto_Slab, Source_Sans_3 } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const robotoSlab = Roboto_Slab({
+const fraunces = Fraunces({
   variable: "--font-heading",
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+  weight: "variable",
+  style: ["normal", "italic"],
+  axes: ["opsz", "SOFT", "WONK"],
   display: "swap",
 });
 
-const sourceSans = Source_Sans_3({
+const inter = Inter({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["300", "400", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -37,11 +38,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${robotoSlab.variable} ${sourceSans.variable}`}
+      className={`${fraunces.variable} ${inter.variable}`}
     >
-      <body className="min-h-screen flex flex-col antialiased bg-cream text-[#1a1a2e]">
+      <body className="min-h-screen flex flex-col antialiased bg-cream text-[#14110F]">
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 pt-[4.75rem] sm:pt-[5.75rem]">{children}</main>
         <Footer />
       </body>
     </html>

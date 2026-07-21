@@ -17,15 +17,28 @@
   --color-cream:       #FAF7F2;
   --color-cream-dark:  #EFE8DC;
   --color-warm-gray:   #5A5654;
+  --color-ink:         #14110F;
 
   /* Typography via next/font variables */
   --font-sans:  var(--font-body);
   --font-serif: var(--font-heading);
+
+  /* Signature easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 :root {
   --background: #FAF7F2;
-  --foreground: #1a1a2e;
+  --foreground: #14110F;
+  --brand-strip: linear-gradient(
+    90deg,
+    #9B2335 0%, #9B2335 20%,
+    #1B3A6B 20%, #1B3A6B 40%,
+    #2D6A2D 40%, #2D6A2D 60%,
+    #CC5500 60%, #CC5500 80%,
+    #6B3A5D 80%, #6B3A5D 100%
+  );
 }
 
 body {
@@ -38,13 +51,86 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading), Georgia, serif;
 }
 
-/* Smooth scrolling */
+/* Native smooth scroll for anchor links; GSAP ScrollTrigger handles the rest */
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Selection colors */
 ::selection {
   background-color: #9B2335;
   color: #FAF7F2;
+}
+
+/* ── Fluid type scale ─────────────────────────────────── */
+.text-hero {
+  font-size: clamp(2.75rem, 6vw + 1rem, 7.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.text-display {
+  font-size: clamp(2.25rem, 3vw + 1.2rem, 4.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+.text-page-title {
+  font-size: clamp(2.5rem, 4vw + 1rem, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* ── Marquee ──────────────────────────────────────────── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+
+.marquee-wrap:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* ── Split-text reveal helpers (GSAP targets these classes) ── */
+.split-line {
+  overflow: hidden;
+  display: block;
+}
+
+/* ── Utility: hide scrollbar for horizontal-drag galleries ──── */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Grain overlay for premium texture on dark sections ──── */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }

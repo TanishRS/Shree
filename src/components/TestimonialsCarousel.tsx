@@ -88,7 +88,7 @@ export default function TestimonialsCarousel() {
   return (
     <div className="relative max-w-2xl mx-auto">
       {/* Card area */}
-      <div className="overflow-hidden rounded-2xl">
+      <div className="overflow-hidden rounded-3xl">
         <AnimatePresence initial={false} custom={dir} mode="wait">
           <motion.div
             key={current}
@@ -98,7 +98,7 @@ export default function TestimonialsCarousel() {
             animate="center"
             exit="exit"
             transition={{ duration: 0.32, ease: "easeInOut" }}
-            className="bg-white rounded-2xl p-8 md:p-10 shadow-md border border-cream-dark"
+            className="bg-white rounded-3xl p-9 md:p-12 shadow-[0_20px_60px_-20px_rgba(20,17,15,0.15)] border border-cream-dark"
           >
             {/* Top row: stars + badge */}
             <div className="flex items-center justify-between mb-5">
@@ -108,12 +108,12 @@ export default function TestimonialsCarousel() {
 
             {/* Quote */}
             <blockquote
-              className="text-navy text-lg md:text-xl leading-relaxed mb-6 relative"
-              style={{ fontFamily: "var(--font-body, sans-serif)" }}
+              className="text-navy text-xl md:text-2xl leading-relaxed mb-7 relative font-medium"
+              style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
             >
               <span
-                className="absolute -top-2 -left-1 text-5xl font-serif leading-none select-none"
-                style={{ color: accentColor, opacity: 0.18 }}
+                className="absolute -top-4 -left-1 text-6xl leading-none select-none"
+                style={{ color: accentColor, opacity: 0.18, fontFamily: "var(--font-heading, Georgia, serif)" }}
                 aria-hidden="true"
               >
                 &ldquo;

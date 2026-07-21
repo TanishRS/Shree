@@ -1,8 +1,11 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/gsap";
+import SplitHeading from "@/components/motion/SplitHeading";
+import Magnetic from "@/components/motion/Magnetic";
 
-// Inline child figure — keeps this file self-contained as a client component
 function ChildFigure({ cx, topY, s = 0.85 }: { cx: number; topY: number; s?: number }) {
   return (
     <g transform={`translate(${cx}, ${topY})`}>
@@ -17,18 +20,17 @@ function ChildFigure({ cx, topY, s = 0.85 }: { cx: number; topY: number; s?: num
 }
 
 const BLOCKS = [
-  { color: "#9B2335", h: 50 },
-  { color: "#1B3A6B", h: 88 },
-  { color: "#2D6A2D", h: 126 },
-  { color: "#CC5500", h: 164 },
-  { color: "#6B3A5D", h: 202 },
+  { color: "#9B2335", h: 60, grade: "08" },
+  { color: "#1B3A6B", h: 104, grade: "09" },
+  { color: "#2D6A2D", h: 148, grade: "10" },
+  { color: "#CC5500", h: 192, grade: "11" },
+  { color: "#6B3A5D", h: 236, grade: "12" },
 ] as const;
 
-const BW = 52, GAP = 10, MAX_H = 202, KID = 48;
+const BW = 58, GAP = 12, MAX_H = 236, KID = 54;
 
 const WA_HREF = "https://wa.me/919967365793?text=Hello%2C%20I%27m%20interested%20in%20enrolling%20at%20Shree%20Excellence%20Tutorials";
 
-// Icon helpers
 function WhatsAppIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -47,144 +49,208 @@ function PhoneIcon() {
 }
 
 export default function AnimatedHero() {
-  const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const eyebrowRef = useRef<HTMLParagraphElement>(null);
+  const subRef = useRef<HTMLParagraphElement>(null);
+  const badgesRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const blocksRef = useRef<SVGSVGElement>(null);
+  const blobRef = useRef<HTMLDivElement>(null);
+  const cueRef = useRef<HTMLDivElement>(null);
 
   const svgH = MAX_H + KID;
   const svgW = BLOCKS.length * (BW + GAP) - GAP;
-  // offset that pushes every block below the SVG viewport
-  const SLIDE = svgH;
 
-  const fade = (delay: number, y = 16) => ({
-    initial: reduce ? {} : { opacity: 0, y },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5, delay },
-  });
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
 
-  const spring = { type: "spring" as const, stiffness: 380, damping: 22 };
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const blockGroups = blocksRef.current ? gsap.utils.toArray<SVGGElement>(blocksRef.current.children) : [];
+
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        tl.fromTo(eyebrowRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 }, 0.1)
+          .fromTo(subRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 0.55)
+          .fromTo(badgesRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 }, 0.75)
+          .fromTo(ctaRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.65 }, 0.85)
+          .fromTo(
+            blockGroups,
+            { y: 70, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.85, stagger: 0.12, ease: "back.out(1.6)" },
+            0.5
+          );
+
+        // Ambient blobs: settle-in once, then a gentle one-shot drift — no infinite loop
+        if (blobRef.current) {
+          gsap.fromTo(
+            blobRef.current,
+            { opacity: 0, scale: 0.85 },
+            { opacity: 1, scale: 1, duration: 1.6, ease: "power2.out" }
+          );
+        }
+
+        // Scroll cue fades as the user starts scrolling
+        if (cueRef.current) {
+          gsap.to(cueRef.current, {
+            opacity: 0,
+            scrollTrigger: { trigger: sectionRef.current, start: "top top", end: "+=250", scrub: true },
+          });
+        }
+      });
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set([eyebrowRef.current, subRef.current, badgesRef.current, ctaRef.current], { opacity: 1, y: 0 });
+        if (blocksRef.current) gsap.set(blocksRef.current.children, { opacity: 1, y: 0 });
+        if (cueRef.current) gsap.set(cueRef.current, { display: "none" });
+      });
+
+      return () => mm.revert();
+    },
+    { scope: sectionRef }
+  );
 
   return (
-    <section className="relative bg-cream overflow-hidden">
-      <div
-        className="absolute -right-32 -top-32 w-[520px] h-[520px] rounded-full opacity-[0.06] pointer-events-none"
-        style={{ background: "radial-gradient(circle, #1B3A6B 0%, transparent 70%)" }}
-        aria-hidden="true"
-      />
+    <section ref={sectionRef} className="relative bg-cream overflow-hidden">
+      {/* Ambient gradient mesh */}
+      <div ref={blobRef} className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div
+          className="absolute -right-40 -top-40 w-[560px] h-[560px] rounded-full opacity-[0.10] blur-2xl"
+          style={{ background: "radial-gradient(circle, #1B3A6B 0%, transparent 70%)" }}
+        />
+        <div
+          className="absolute -left-32 top-1/3 w-[420px] h-[420px] rounded-full opacity-[0.08] blur-2xl"
+          style={{ background: "radial-gradient(circle, #9B2335 0%, transparent 70%)" }}
+        />
+        <div
+          className="absolute right-1/4 bottom-0 w-[380px] h-[380px] rounded-full opacity-[0.07] blur-2xl"
+          style={{ background: "radial-gradient(circle, #CC5500 0%, transparent 70%)" }}
+        />
+      </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-16 pb-20 md:pb-28">
+        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
           {/* ── Text ── */}
-          <div className="flex-1 order-2 md:order-1">
-            <motion.p
-              className="text-warm-gray text-xs font-semibold uppercase tracking-[0.2em] mb-4"
+          <div className="flex-1 order-2 md:order-1 md:max-w-xl">
+            <p
+              ref={eyebrowRef}
+              className="text-warm-gray text-xs font-semibold uppercase tracking-[0.24em] mb-5 flex items-center gap-2"
               style={{ fontFamily: "var(--font-body, sans-serif)" }}
-              {...fade(0.1, 10)}
             >
+              <span className="w-6 h-px bg-maroon" aria-hidden="true" />
               Est. 2017 · Panvel, Maharashtra
-            </motion.p>
+            </p>
 
-            <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-navy leading-[1.08] mb-4"
-              style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
-              {...fade(0.24, 22)}
+            <SplitHeading
+              as="h1"
+              trigger="mount"
+              className="text-hero font-semibold text-navy mb-6"
+              type="lines"
             >
-              Pride in{" "}
-              <span className="text-maroon">Excellence.</span>
-            </motion.h1>
+              <>
+                Pride in
+                <br />
+                <span className="text-maroon italic">Excellence.</span>
+              </>
+            </SplitHeading>
 
-            <motion.p
+            <p
+              ref={subRef}
               className="text-lg sm:text-xl text-warm-gray leading-relaxed mb-8 max-w-md"
               style={{ fontFamily: "var(--font-body, sans-serif)" }}
-              {...fade(0.4, 14)}
             >
               State Board &amp; CBSE coaching for Grades 8–12 in Khanda Colony, Panvel.
               Trusted by families across the community since 2017.
-            </motion.p>
+            </p>
 
-            {/* Trust badges */}
-            <motion.div
-              className="flex flex-wrap gap-3 mb-10"
-              initial={reduce ? {} : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.55 }}
-            >
+            <div ref={badgesRef} className="flex flex-wrap gap-3 mb-10">
               {[
-                <><span className="text-yellow-500">★</span> 4.9 · 44 Reviews</>,
+                <><span className="text-amber-500">★</span> 4.9 · 44 Reviews</>,
                 "State Board & CBSE",
                 "Grades 8–12",
               ].map((label, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-cream-dark rounded-full text-xs font-semibold text-navy shadow-sm"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white border border-cream-dark rounded-full text-xs font-semibold text-navy shadow-sm"
+                  style={{ fontFamily: "var(--font-body, sans-serif)" }}
                 >
                   {label}
                 </span>
               ))}
-            </motion.div>
+            </div>
 
-            {/* CTAs */}
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4"
-              style={{ fontFamily: "var(--font-body, sans-serif)" }}
-              {...fade(0.68, 10)}
-            >
-              <motion.a
-                href={WA_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2.5 px-6 py-3.5 bg-forest text-white font-semibold rounded-lg shadow-sm select-none"
-                whileHover={reduce ? {} : { scale: 1.03, backgroundColor: "#1E4D1E" }}
-                whileTap={reduce ? {} : { scale: 0.95 }}
-                transition={spring}
-              >
-                <WhatsAppIcon />
-                Chat on WhatsApp
-              </motion.a>
-              <motion.a
-                href="tel:+919967365793"
-                className="flex items-center justify-center gap-2 px-6 py-3.5 border-2 border-maroon text-maroon font-semibold rounded-lg select-none"
-                whileHover={reduce ? {} : { scale: 1.03, backgroundColor: "#9B2335", color: "#FAF7F2", borderColor: "#9B2335" }}
-                whileTap={reduce ? {} : { scale: 0.95 }}
-                transition={spring}
-              >
-                <PhoneIcon />
-                Call Now
-              </motion.a>
-            </motion.div>
+            <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4" style={{ fontFamily: "var(--font-body, sans-serif)" }}>
+              <Magnetic strength={10}>
+                <a
+                  href={WA_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2.5 px-6 py-3.5 bg-forest text-white font-semibold rounded-lg shadow-sm select-none hover:bg-forest-dark active:scale-[0.97] transition-[background-color,transform] duration-200"
+                >
+                  <WhatsAppIcon />
+                  Chat on WhatsApp
+                </a>
+              </Magnetic>
+              <Magnetic strength={10}>
+                <a
+                  href="tel:+919967365793"
+                  className="flex items-center justify-center gap-2 px-6 py-3.5 border-2 border-maroon text-maroon font-semibold rounded-lg select-none hover:bg-maroon hover:text-cream active:scale-[0.97] transition-[background-color,color,transform] duration-200"
+                >
+                  <PhoneIcon />
+                  Call Now
+                </a>
+              </Magnetic>
+            </div>
           </div>
 
-          {/* ── Animated step-blocks ── */}
+          {/* ── Step-blocks visual ── */}
           <div className="flex-1 order-1 md:order-2 flex justify-center md:justify-end">
             <svg
+              ref={blocksRef}
               viewBox={`0 0 ${svgW} ${svgH}`}
               xmlns="http://www.w3.org/2000/svg"
-              aria-label="Five ascending step-blocks with students — the Shree Excellence emblem"
-              className="w-full max-w-xs sm:max-w-sm md:max-w-md drop-shadow-lg overflow-hidden"
-              style={{ overflow: "hidden" }}
+              aria-label="Five ascending step-blocks labelled Grade 8 through 12, with students climbing — the Shree Excellence emblem"
+              className="w-full max-w-xs sm:max-w-sm md:max-w-md drop-shadow-xl"
             >
               {BLOCKS.map((block, i) => {
                 const x = i * (BW + GAP);
                 const blockTopY = svgH - block.h;
                 const cx = x + BW / 2;
-                const delay = 0.45 + i * 0.14;
 
                 return (
-                  <motion.g
-                    key={i}
-                    initial={reduce ? {} : { y: SLIDE }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.62, delay, ease: [0.22, 1.05, 0.36, 1] }}
-                  >
-                    <rect x={x} y={blockTopY} width={BW} height={block.h} rx={5} fill={block.color} />
-                    {/* shine highlight */}
-                    <rect x={x+4} y={blockTopY+4} width={BW-8} height={14} rx={3} fill="white" fillOpacity={0.12} />
-                    <ChildFigure cx={cx} topY={blockTopY} s={0.85} />
-                  </motion.g>
+                  <g key={i}>
+                    <rect x={x} y={blockTopY} width={BW} height={block.h} rx={6} fill={block.color} />
+                    <rect x={x + 4} y={blockTopY + 4} width={BW - 8} height={16} rx={4} fill="white" fillOpacity={0.14} />
+                    <text
+                      x={cx}
+                      y={blockTopY + block.h - 14}
+                      textAnchor="middle"
+                      fill="white"
+                      fillOpacity={0.85}
+                      fontSize={13}
+                      fontWeight={800}
+                      style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
+                    >
+                      {block.grade}
+                    </text>
+                    <ChildFigure cx={cx} topY={blockTopY} s={0.9} />
+                  </g>
                 );
               })}
             </svg>
           </div>
+        </div>
 
+        {/* Scroll cue */}
+        <div ref={cueRef} className="hidden md:flex justify-center mt-14">
+          <div className="flex flex-col items-center gap-2 text-warm-gray/70">
+            <span className="text-[10px] uppercase tracking-[0.3em]" style={{ fontFamily: "var(--font-body, sans-serif)" }}>
+              Scroll
+            </span>
+            <svg width="14" height="20" viewBox="0 0 14 20" fill="none" className="animate-bounce" aria-hidden="true">
+              <path d="M1 1L7 8L13 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M1 11L7 18L13 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
+            </svg>
+          </div>
         </div>
       </div>
     </section>

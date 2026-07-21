@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/motion/Reveal";
+import TiltCard from "@/components/motion/TiltCard";
 
 const WHY_US = [
   {
@@ -26,40 +27,39 @@ const WHY_US = [
 ] as const;
 
 export default function AnimatedWhyUs() {
-  const reduce = useReducedMotion();
-
   return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {WHY_US.map(({ accent, title, body }, i) => (
-        <motion.div
-          key={title}
-          className="bg-cream rounded-xl p-6 border border-cream-dark cursor-default"
-          initial={reduce ? {} : { opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.48, delay: i * 0.1 }}
-          whileHover={reduce ? {} : { y: -5, boxShadow: "0 10px 28px rgba(0,0,0,0.09)" }}
-        >
+    <Reveal as="div" stagger={0.12} y={32} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {WHY_US.map(({ accent, title, body }) => (
+        <TiltCard key={title} className="group">
           <div
-            className="w-10 h-10 rounded-lg mb-4 flex items-end justify-end pb-1.5 pr-1.5"
-            style={{ backgroundColor: accent + "22" }}
+            className="relative h-full bg-white rounded-2xl p-7 border border-cream-dark cursor-default overflow-hidden transition-shadow duration-300 hover:shadow-[0_20px_45px_-15px_rgba(20,17,15,0.18)]"
           >
-            <div className="w-5 h-5 rounded" style={{ backgroundColor: accent }} />
+            <div
+              className="absolute -top-10 -right-10 w-28 h-28 rounded-full opacity-[0.08] transition-transform duration-500 group-hover:scale-125"
+              style={{ backgroundColor: accent }}
+              aria-hidden="true"
+            />
+            <div
+              className="relative w-11 h-11 rounded-xl mb-5 flex items-end justify-end pb-2 pr-2"
+              style={{ backgroundColor: accent + "1A" }}
+            >
+              <div className="w-5 h-5 rounded" style={{ backgroundColor: accent }} />
+            </div>
+            <h3
+              className="relative font-semibold text-navy text-lg mb-2.5"
+              style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
+            >
+              {title}
+            </h3>
+            <p
+              className="relative text-warm-gray text-sm leading-relaxed"
+              style={{ fontFamily: "var(--font-body, sans-serif)" }}
+            >
+              {body}
+            </p>
           </div>
-          <h3
-            className="font-bold text-navy mb-2"
-            style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
-          >
-            {title}
-          </h3>
-          <p
-            className="text-warm-gray text-sm leading-relaxed"
-            style={{ fontFamily: "var(--font-body, sans-serif)" }}
-          >
-            {body}
-          </p>
-        </motion.div>
+        </TiltCard>
       ))}
-    </div>
+    </Reveal>
   );
 }

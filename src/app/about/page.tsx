@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { StepBlocksDivider, StepBlocksAccent } from "@/components/StepBlocksSVG";
+import Reveal from "@/components/motion/Reveal";
+import SplitHeading from "@/components/motion/SplitHeading";
+import TiltCard from "@/components/motion/TiltCard";
+import Magnetic from "@/components/motion/Magnetic";
 
 export const metadata: Metadata = {
   title: "About Us | Shree Excellence Tutorials",
@@ -35,9 +39,9 @@ export default function AboutPage() {
   return (
     <>
       {/* ── PAGE HEADER ────────────────────────────────────── */}
-      <section className="bg-navy text-white py-16 md:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 mb-4">
+      <section className="relative grain bg-navy text-white py-20 md:py-28 overflow-hidden">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal as="div" className="flex items-center gap-2 mb-5">
             <StepBlocksAccent />
             <span
               className="text-white/60 text-xs uppercase tracking-[0.2em] font-semibold"
@@ -45,24 +49,27 @@ export default function AboutPage() {
             >
               About Us
             </span>
-          </div>
-          <h1
-            className="text-4xl md:text-5xl font-extrabold leading-tight max-w-2xl"
-            style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
+          </Reveal>
+          <SplitHeading
+            as="h1"
+            trigger="mount"
+            className="text-page-title font-semibold max-w-2xl"
           >
-            Behind the name <span className="text-maroon">Shree Excellence.</span>
-          </h1>
+            <>
+              Behind the name <span className="text-maroon italic">Shree Excellence.</span>
+            </>
+          </SplitHeading>
         </div>
       </section>
 
       <StepBlocksDivider />
 
       {/* ── STORY ──────────────────────────────────────────── */}
-      <section className="bg-cream py-20">
+      <section className="bg-cream py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-start">
             {/* Photo placeholder */}
-            <div className="bg-cream-dark rounded-2xl aspect-[4/3] flex items-center justify-center">
+            <Reveal as="div" className="bg-cream-dark rounded-3xl aspect-[4/3] flex items-center justify-center">
               <div className="text-center px-8">
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-navy/10 flex items-center justify-center">
                   <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
@@ -77,18 +84,18 @@ export default function AboutPage() {
                   [ Founder / classroom photo coming soon ]
                 </p>
               </div>
-            </div>
+            </Reveal>
 
             {/* Story text */}
-            <div>
+            <Reveal as="div" delay={0.1}>
               <h2
-                className="text-2xl md:text-3xl font-extrabold text-navy mb-5"
+                className="text-3xl md:text-4xl font-semibold text-navy mb-6"
                 style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
               >
                 Our story
               </h2>
               <div
-                className="space-y-4 text-warm-gray leading-relaxed"
+                className="space-y-4 text-warm-gray text-lg leading-relaxed"
                 style={{ fontFamily: "var(--font-body, sans-serif)" }}
               >
                 <p>
@@ -100,11 +107,11 @@ export default function AboutPage() {
                 <p>
                   We cover both State Board and CBSE curricula, so families with children on different boards can rely on a single, trusted place for all their coaching needs.
                 </p>
-                <p className="italic text-sm text-warm-gray/80 border-l-4 border-maroon pl-4 py-1">
+                <p className="italic text-base text-warm-gray/80 border-l-4 border-maroon pl-4 py-1">
                   [ Full founder story and team profiles — coming soon. We are working with the institute to gather these details. ]
                 </p>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -112,9 +119,9 @@ export default function AboutPage() {
       <StepBlocksDivider />
 
       {/* ── WHAT MAKES US DIFFERENT ────────────────────────── */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
+          <div className="mb-14">
             <div className="flex items-center gap-2 mb-3">
               <StepBlocksAccent />
               <span
@@ -124,70 +131,66 @@ export default function AboutPage() {
                 Our Approach
               </span>
             </div>
-            <h2
-              className="text-3xl md:text-4xl font-extrabold text-navy"
-              style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
-            >
+            <SplitHeading as="h2" className="text-display font-semibold text-navy">
               What sets us apart
-            </h2>
+            </SplitHeading>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <Reveal as="div" stagger={0.1} className="grid md:grid-cols-2 gap-6">
             {DIFFERENTIATORS.map(({ color, heading, body }) => (
-              <div
-                key={heading}
-                className="flex gap-5 p-6 rounded-xl bg-cream border border-cream-dark hover:shadow-sm transition-shadow"
-              >
-                <div
-                  className="shrink-0 w-1.5 rounded-full"
-                  style={{ backgroundColor: color }}
-                  aria-hidden="true"
-                />
-                <div>
-                  <h3
-                    className="font-bold text-navy mb-2"
-                    style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
-                  >
-                    {heading}
-                  </h3>
-                  <p
-                    className="text-warm-gray text-sm leading-relaxed"
-                    style={{ fontFamily: "var(--font-body, sans-serif)" }}
-                  >
-                    {body}
-                  </p>
+              <TiltCard key={heading} max={4}>
+                <div className="flex gap-5 h-full p-7 rounded-2xl bg-cream border border-cream-dark hover:shadow-[0_20px_45px_-20px_rgba(20,17,15,0.15)] transition-shadow duration-300">
+                  <div
+                    className="shrink-0 w-1.5 rounded-full"
+                    style={{ backgroundColor: color }}
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <h3
+                      className="font-semibold text-navy text-lg mb-2"
+                      style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
+                    >
+                      {heading}
+                    </h3>
+                    <p
+                      className="text-warm-gray text-sm leading-relaxed"
+                      style={{ fontFamily: "var(--font-body, sans-serif)" }}
+                    >
+                      {body}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </TiltCard>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
       <StepBlocksDivider />
 
       {/* ── REVIEWS PLACEHOLDER ────────────────────────────── */}
-      <section className="bg-cream py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="bg-cream py-24 md:py-32">
+        <Reveal as="div" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-3">
             <StepBlocksAccent />
           </div>
           <h2
-            className="text-3xl font-extrabold text-navy mb-4"
+            className="text-3xl md:text-4xl font-semibold text-navy mb-4"
             style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
           >
             4.9★ — 44 families can&apos;t be wrong
           </h2>
           <p
-            className="text-warm-gray mb-8"
+            className="text-warm-gray text-lg mb-9"
             style={{ fontFamily: "var(--font-body, sans-serif)" }}
           >
             Read all 44 reviews on Google to hear directly from the students and parents we have worked with.
           </p>
-          <div className="inline-flex items-center gap-2 bg-cream-dark rounded-xl p-6 border border-cream-dark">
-            <span className="text-2xl">⭐</span>
+          <div className="inline-flex items-center gap-2 bg-white rounded-2xl p-7 border border-cream-dark shadow-sm">
+            <span className="text-2xl" aria-hidden="true">⭐</span>
             <div className="text-left">
               <div
-                className="font-extrabold text-navy text-lg"
+                className="font-semibold text-navy text-lg"
                 style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
               >
                 4.9 / 5
@@ -207,22 +210,22 @@ export default function AboutPage() {
               [ Review quotes coming soon — gathering from Google Business Profile ]
             </p>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <StepBlocksDivider />
 
       {/* ── CTA ────────────────────────────────────────────── */}
-      <section className="bg-navy text-white py-16">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+      <section className="bg-navy text-white py-20 md:py-24">
+        <Reveal as="div" className="max-w-3xl mx-auto px-4 text-center">
           <h2
-            className="text-3xl font-extrabold mb-4"
+            className="text-3xl md:text-4xl font-semibold mb-5"
             style={{ fontFamily: "var(--font-heading, Georgia, serif)" }}
           >
             Want to know more?
           </h2>
           <p
-            className="text-white/70 mb-8"
+            className="text-white/70 text-lg mb-9"
             style={{ fontFamily: "var(--font-body, sans-serif)" }}
           >
             Check our admissions page for details on grades, boards, and how to enrol — or contact us directly.
@@ -231,20 +234,24 @@ export default function AboutPage() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
             style={{ fontFamily: "var(--font-body, sans-serif)" }}
           >
-            <Link
-              href="/admissions"
-              className="px-7 py-3.5 bg-maroon text-white font-bold rounded-lg hover:bg-maroon-dark transition-colors"
-            >
-              See Admissions
-            </Link>
-            <Link
-              href="/contact"
-              className="px-7 py-3.5 border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors"
-            >
-              Contact Us
-            </Link>
+            <Magnetic strength={10}>
+              <Link
+                href="/admissions"
+                className="inline-flex items-center justify-center px-7 py-3.5 bg-maroon text-white font-bold rounded-lg hover:bg-maroon-dark transition-colors"
+              >
+                See Admissions
+              </Link>
+            </Magnetic>
+            <Magnetic strength={10}>
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center px-7 py-3.5 border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors"
+              >
+                Contact Us
+              </Link>
+            </Magnetic>
           </div>
-        </div>
+        </Reveal>
       </section>
     </>
   );
